@@ -9,9 +9,10 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-
 import { UserService } from './users.service';
 import { UserDto, UserRegistration } from './validation';
+import config from '../config';
+const jwt = require('jsonwebtoken');
 
 @Controller('users')
 export class UserController {
@@ -37,7 +38,13 @@ export class UserController {
     const users = await this.service.filter({ email, password });
 
     if (users.length == 1) {
-      return users[0];
+      let user = users[0];
+      const token = jwt.sign(JSON.stringify(user), config.jwtSecrete);
+
+      return {
+        email: user.email,
+        token,
+      };
     } else {
       throw new HttpException(
         { message: ['Invalid Credentials'] },

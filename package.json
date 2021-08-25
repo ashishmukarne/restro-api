@@ -28,6 +28,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "escape-string-regexp": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.1.1",
     "mongoose": "^6.0.0",
     "reflect-metadata": "^0.1.13",

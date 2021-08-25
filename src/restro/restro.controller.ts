@@ -6,14 +6,17 @@ import {
   Param,
   Post,
   Req,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 
 import { RestroService } from 'src/restro/restro.service';
+import { AuthGuard } from './auth.guard';
 import { RestroDto } from './validation';
 
 @Controller('/restros')
+@UseGuards(AuthGuard)
 export class RestroController {
   constructor(private readonly service: RestroService) {}
 
@@ -21,8 +24,6 @@ export class RestroController {
   getAll(@Param('name') name, @Param('sort') sort, @Req() req) {
     name = req.query.name;
     sort = req.query.sort;
-    console.log('search: ', name, sort);
-
     if (name && name.length > 0) {
       return this.service.search(name, sort);
     } else {
